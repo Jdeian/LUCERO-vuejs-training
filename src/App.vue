@@ -6,6 +6,7 @@
     <nav class="navigation">
       <router-link to="/">Day 1: Counter</router-link>
       <router-link to="/day2-list">Day 2: Task List</router-link>
+      <router-link to="/home">Day 3: Router</router-link>
     </nav>
     <main class="content">
       <router-view />
