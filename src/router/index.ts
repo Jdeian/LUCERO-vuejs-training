@@ -5,6 +5,8 @@ import HomeViewDay3 from '../views/HomeView_day3.vue'
 import TaskDetailView from '../views/TaskDetailView.vue'
 import AboutView from '../views/AboutView.vue'
 import TaskListView from '../views/TaskListView.vue'
+import TodoListView from '../views/TodoListView.vue'
+import UsersView from '../views/UsersView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -34,6 +36,16 @@ const router = createRouter({
       path: '/day4-tasks',
       name: 'day4-tasks',
       component: TaskListView
+    },
+    {
+      path: '/day5-todos',
+      name: 'day5-todos',
+      component: TodoListView
+    },
+    {
+      path: '/day5-users',
+      name: 'day5-users',
+      component: UsersView
     },
     {
       path: '/about',

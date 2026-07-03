@@ -23,6 +23,7 @@ function handleLogin() {
         <router-link to="/day2-list">Day 2: Task List</router-link>
         <router-link to="/home">Day 3: Router</router-link>
         <router-link to="/day4-tasks">Day 4: Pinia Tasks</router-link>
+        <router-link to="/day5-todos">Day 5: Todo List</router-link>
       </nav>
 
       <div class="user-panel">
@@ -94,8 +95,8 @@ function handleLogin() {
   color: #111827;
 }
 .navigation a.router-link-active {
-  background: #eef2ff;
-  color: #6366f1;
+  background: #fff0f0;
+  color: #800020;
   font-weight: 600;
 }
 
@@ -108,9 +109,9 @@ function handleLogin() {
 .welcome {
   font-size: 15px;
   font-weight: 600;
-  color: #374151;
-  background: #f3f4f6;
-  border: 1px solid #e5e7eb;
+  color: #800020;
+  background: #fff0f0;
+  border: 1px solid #f5c0c0;
   border-radius: 10px;
   padding: 5px 16px;
 }
@@ -132,12 +133,12 @@ function handleLogin() {
   background: #fff;
 }
 .login-input:focus {
-  border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  border-color: #800020;
+  box-shadow: 0 0 0 3px rgba(128, 0, 32, 0.1);
 }
 .btn-login {
   padding: 7px 16px;
-  background: #6366f1;
+  background: #800020;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -148,7 +149,7 @@ function handleLogin() {
   white-space: nowrap;
 }
 .btn-login:hover {
-  background: #4f46e5;
+  background: #6b0019;
   transform: translateY(-1px);
 }
 .btn-logout {
