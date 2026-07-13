@@ -44,6 +44,9 @@ const app = createApp(App)
   .use(IonicVue)
   .use(router);
 
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+
 router.isReady().then(() => {
   app.mount('#app');
+  defineCustomElements(window);
 });

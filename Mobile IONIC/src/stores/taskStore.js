@@ -23,12 +23,12 @@ export const useTaskStore = defineStore('tasks', () => {
   const doneCount    = computed(() => tasks.value.filter(t => t.done).length)
   const pendingCount = computed(() => tasks.value.filter(t => !t.done).length)
 
-  // TODO 4: Define addTask(name, priority) action
+  // TODO 4: Define addTask(name, priority, photo) action
   // - Guard against empty names
-  // - Push a new task: { id: nextId.value++, name, priority, done: false }
-  function addTask(name, priority = 'low') {
+  // - Push a new task: { id: nextId.value++, name, priority, photo, done: false }
+  function addTask(name, priority = 'low', photo = '') {
     if (!name.trim()) return
-    tasks.value.push({ id: nextId.value++, name, priority, done: false })
+    tasks.value.push({ id: nextId.value++, name, priority, photo, done: false })
   }
 
   // TODO 5: Define toggleTask(id) action
@@ -48,7 +48,15 @@ export const useTaskStore = defineStore('tasks', () => {
     if (task) task.photo = path
   }
 
+  function updateTaskDetails(id, name, priority) {
+    const task = tasks.value.find(t => t.id === id)
+    if (task) {
+      if (name.trim()) task.name = name.trim()
+      task.priority = priority
+    }
+  }
+
   // TODO 7: Return everything the component needs to access
-  return { tasks, nextId, totalCount, doneCount, pendingCount, currentFilter, addTask, toggleTask, removeTask, addPhotoToTask }
+  return { tasks, nextId, totalCount, doneCount, pendingCount, currentFilter, addTask, toggleTask, removeTask, addPhotoToTask, updateTaskDetails }
 
 }, { persist: true })

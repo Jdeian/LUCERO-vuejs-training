@@ -29,7 +29,7 @@
         </ion-card-header>
         <ion-card-content>
           <ion-badge :color="isLoggedIn ? 'success' : 'medium'" class="status-pill">
-            {{ isLoggedIn ? '● Online' : '○ Offline' }}
+            {{ isLoggedIn ? 'Online' : 'Offline' }}
           </ion-badge>
         </ion-card-content>
       </ion-card>

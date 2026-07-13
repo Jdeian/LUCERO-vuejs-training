@@ -27,8 +27,11 @@
 
       <ion-list v-else>
         <ion-item-sliding v-for="task in doneTasks" :key="task.id">
-          <ion-item lines="full" class="done-item">
+          <ion-item lines="full" class="done-item" button :router-link="'/tabs/tasks/' + task.id" router-direction="forward">
             <ion-icon :icon="checkmarkCircle" slot="start" color="success" />
+            <ion-thumbnail slot="start" v-if="task.photo" class="task-thumbnail">
+              <ion-img :src="task.photo" />
+            </ion-thumbnail>
             <ion-label>
               <h2 class="line-through">{{ task.name }}</h2>
             </ion-label>
@@ -38,8 +41,8 @@
             >
               {{ task.priority === 'high' ? 'High' : (task.priority === 'medium' ? 'Medium' : 'Low') }}
             </ion-badge>
-            <ion-button slot="end" fill="clear" color="medium" @click="toggleTask(task.id)">
-              <ion-icon slot="icon-only" :icon="arrowUndoOutline" />
+            <ion-button slot="end" fill="clear" color="medium" @click.prevent="toggleTask(task.id)">
+              <ion-icon slot="icon-only" :icon="timeOutline" />
             </ion-button>
           </ion-item>
 
@@ -60,11 +63,11 @@ import { storeToRefs } from 'pinia'
 import {
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
   IonList, IonItem, IonItemSliding, IonItemOptions, IonItemOption,
-  IonLabel, IonIcon, IonChip, IonButton, IonBadge
+  IonLabel, IonIcon, IonChip, IonButton, IonBadge, IonThumbnail, IonImg
 } from '@ionic/vue'
 import {
   checkmarkDoneOutline, checkmarkCircle, trophyOutline,
-  trashOutline, arrowUndoOutline
+  trashOutline, timeOutline
 } from 'ionicons/icons'
 import { useTaskStore } from '@/stores/taskStore'
 
@@ -98,4 +101,14 @@ const doneTasks = computed(() => tasks.value.filter(t => t.done))
 }
 .done-item { opacity: 0.8; }
 .line-through { text-decoration: line-through; }
+
+/* Small thumbnail in task list */
+.task-thumbnail {
+  --size: 40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-right: 6px;
+}
 </style>
