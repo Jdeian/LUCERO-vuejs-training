@@ -249,17 +249,29 @@ function goToDetail(id) {
   margin-bottom: 12px;
 }
 
-.task-done { opacity: 0.7; }
-.line-through { text-decoration: line-through; color: var(--ion-color-medium); }
-.status-badge { font-size: 0.75em; padding: 4px 8px; }
-
-ion-segment-button {
-  font-size: 0.75rem;
-  text-transform: capitalize;
-  min-height: 36px;
-}
+.task-done { opacity: 0.65; }
+.line-through { text-decoration: line-through; }
+.status-badge { font-size: 0.65rem; }
 
 .modal-content { padding: 8px 0; }
 .input-row { margin: 12px 8px 4px; }
 .modal-btn-row { margin: 12px 16px; }
+
+ion-segment {
+  --background: var(--ion-color-step-100, #1e1e1e);
+  border-radius: 10px;
+}
+ion-segment-button {
+  --padding-top: 6px;
+  --padding-bottom: 6px;
+  font-size: 0.75rem;
+  min-height: 32px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+ion-segment-button ion-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  margin: 0;
+}
 </style>
