@@ -42,7 +42,13 @@ export const useTaskStore = defineStore('tasks', () => {
     tasks.value = tasks.value.filter(t => t.id !== id)
   }
 
+  // DAY 8: Add photo path to a task
+  function addPhotoToTask(id, path) {
+    const task = tasks.value.find(t => t.id === id)
+    if (task) task.photo = path
+  }
+
   // TODO 7: Return everything the component needs to access
-  return { tasks, nextId, totalCount, doneCount, pendingCount, currentFilter, addTask, toggleTask, removeTask }
+  return { tasks, nextId, totalCount, doneCount, pendingCount, currentFilter, addTask, toggleTask, removeTask, addPhotoToTask }
 
 }, { persist: true })

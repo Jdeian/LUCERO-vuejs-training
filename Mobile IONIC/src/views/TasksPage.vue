@@ -69,6 +69,10 @@
             <ion-label>
               <h2 :class="{ 'line-through': task.done }">{{ task.name }}</h2>
             </ion-label>
+            <!-- STEP 6: Thumbnail if task.photo exists -->
+            <ion-thumbnail v-if="task.photo" slot="end" class="task-thumbnail">
+              <ion-img :src="task.photo" />
+            </ion-thumbnail>
             <ion-badge 
               slot="end" 
               :color="task.priority === 'high' ? 'danger' : (task.priority === 'medium' ? 'warning' : 'primary')" 
@@ -141,7 +145,7 @@ import {
   IonList, IonItem, IonItemSliding, IonItemOptions, IonItemOption,
   IonLabel, IonCheckbox, IonBadge, IonChip, IonIcon,
   IonFab, IonFabButton, IonModal, IonInput, IonButton, IonButtons, IonSelect, IonSelectOption,
-  IonSegment, IonSegmentButton
+  IonSegment, IonSegmentButton, IonImg, IonThumbnail
 } from '@ionic/vue'
 import {
   addOutline, trashOutline, checkmarkCircleOutline, personCircle
@@ -273,5 +277,15 @@ ion-segment-button ion-label {
   font-size: 0.78rem;
   font-weight: 500;
   margin: 0;
+}
+
+/* STEP 6: Small thumbnail in task list */
+.task-thumbnail {
+  --size: 40px;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-right: 6px;
 }
 </style>

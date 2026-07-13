@@ -29,7 +29,7 @@
             </ion-badge>
           </ion-item>
 
-          <ion-item>
+          <ion-item lines="none">
             <ion-icon :icon="flagOutline" slot="start" color="primary"></ion-icon>
             <ion-label color="medium">Priority</ion-label>
             <ion-badge slot="end" :color="task.priority === 'high' ? 'danger' : (task.priority === 'medium' ? 'warning' : 'primary')">
@@ -39,7 +39,18 @@
 
         </ion-list>
 
-        <div class="ion-padding">
+        <!-- STEP 5: Display the photo if it exists -->
+        <div v-if="task.photo" class="photo-section">
+          <ion-img :src="task.photo" class="task-photo" />
+        </div>
+
+        <div class="ion-padding action-buttons">
+          <!-- STEP 3: Camera button that calls Camera.getPhoto() -->
+          <ion-button expand="block" fill="outline" color="primary" @click="takePhoto">
+            <ion-icon slot="start" :icon="cameraOutline" />
+            {{ task.photo ? 'Change Photo' : 'Attach Photo' }}
+          </ion-button>
+
           <ion-button 
             expand="block" 
             :color="task.done ? 'warning' : 'primary'"
@@ -67,12 +78,13 @@ import { useRoute } from 'vue-router'
 import { 
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent, 
   IonButtons, IonBackButton, IonBadge, IonList, IonItem, 
-  IonLabel, IonIcon, IonText, IonButton
+  IonLabel, IonIcon, IonText, IonButton, IonImg
 } from '@ionic/vue'
 import { 
-  documentTextOutline, timeOutline, flagOutline, calendarOutline, 
-  checkmarkDoneOutline, arrowUndoOutline, alertCircleOutline
+  documentTextOutline, timeOutline, flagOutline,
+  checkmarkDoneOutline, arrowUndoOutline, alertCircleOutline, cameraOutline
 } from 'ionicons/icons'
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
 import { useTaskStore } from '@/stores/taskStore'
 
 const route = useRoute()
@@ -82,6 +94,23 @@ const task = computed(() => {
   const idParam = parseInt(route.params.id)
   return taskStore.tasks.find(t => t.id === idParam)
 })
+
+// STEP 3 & 4: Take photo and save to store
+async function takePhoto() {
+  try {
+    const photo = await Camera.getPhoto({
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Prompt,
+      quality: 90
+    })
+    // STEP 4: call store.addPhotoToTask() with the returned webPath
+    if (photo.webPath && task.value) {
+      taskStore.addPhotoToTask(task.value.id, photo.webPath)
+    }
+  } catch (err) {
+    // user cancelled or error — do nothing
+  }
+}
 </script>
 
 <style scoped>
@@ -91,5 +120,24 @@ const task = computed(() => {
 }
 .empty-state {
   margin-top: 80px;
+}
+
+/* STEP 5: Photo display styles */
+.photo-section {
+  margin: 8px 16px 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.task-photo {
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 </style>
