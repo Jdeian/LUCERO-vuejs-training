@@ -32,6 +32,12 @@
             <ion-label>
               <h2 class="line-through">{{ task.name }}</h2>
             </ion-label>
+            <ion-badge 
+              :color="task.priority === 'high' ? 'danger' : (task.priority === 'medium' ? 'warning' : 'primary')" 
+              style="margin-right: 12px; font-size: 0.7em;"
+            >
+              {{ task.priority === 'high' ? 'High' : (task.priority === 'medium' ? 'Medium' : 'Low') }}
+            </ion-badge>
             <ion-button slot="end" fill="clear" color="medium" @click="toggleTask(task.id)">
               <ion-icon slot="icon-only" :icon="arrowUndoOutline" />
             </ion-button>
@@ -54,7 +60,7 @@ import { storeToRefs } from 'pinia'
 import {
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
   IonList, IonItem, IonItemSliding, IonItemOptions, IonItemOption,
-  IonLabel, IonIcon, IonChip, IonButton
+  IonLabel, IonIcon, IonChip, IonButton, IonBadge
 } from '@ionic/vue'
 import {
   checkmarkDoneOutline, checkmarkCircle, trophyOutline,

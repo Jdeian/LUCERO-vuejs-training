@@ -41,8 +41,9 @@
         </ion-card-header>
         <ion-card-content>
           <ion-item lines="full" class="name-input">
-            <ion-label position="floating">Your Name</ion-label>
             <ion-input
+              label="Your Name"
+              label-placement="floating"
               v-model="nameInput"
               placeholder="e.g. Jade"
               :clear-input="true"
@@ -82,17 +83,17 @@
         <ion-list-header>
           <ion-label>Task Summary</ion-label>
         </ion-list-header>
-        <ion-item>
+        <ion-item button router-link="/tabs/tasks" router-direction="root" @click="taskStore.currentFilter = 'all'">
           <ion-icon slot="start" :icon="listOutline" color="primary" />
           <ion-label>Total Tasks</ion-label>
           <ion-note slot="end">{{ totalCount }}</ion-note>
         </ion-item>
-        <ion-item>
+        <ion-item button router-link="/tabs/tasks" router-direction="root" @click="taskStore.currentFilter = 'pending'">
           <ion-icon slot="start" :icon="timeOutline" color="warning" />
           <ion-label>Pending</ion-label>
           <ion-note slot="end" color="warning">{{ pendingCount }}</ion-note>
         </ion-item>
-        <ion-item>
+        <ion-item button router-link="/tabs/tasks" router-direction="root" @click="taskStore.currentFilter = 'completed'">
           <ion-icon slot="start" :icon="checkmarkCircleOutline" color="success" />
           <ion-label>Completed</ion-label>
           <ion-note slot="end" color="success">{{ doneCount }}</ion-note>
@@ -170,7 +171,7 @@ function handleLogout() {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: var(--ion-color-primary-tint);
+  background: white;
   display: flex;
   align-items: center;
   justify-content: center;
