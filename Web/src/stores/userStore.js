@@ -1,4 +1,4 @@
-// =============================================================
+  // =============================================================
 //  EXTENSION — userStore.js
 //  Stores the current user's name and login state.
 //  Actions: login(name), logout()
