@@ -7,6 +7,7 @@
 
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { Preferences } from '@capacitor/preferences'
 
 // TODO 1: Export a useTaskStore function using defineStore
 // The store ID is 'tasks' — this appears in Vue DevTools
@@ -23,29 +24,66 @@ export const useTaskStore = defineStore('tasks', () => {
   const doneCount    = computed(() => tasks.value.filter(t => t.done).length)
   const pendingCount = computed(() => tasks.value.filter(t => !t.done).length)
 
+  // DAY 9: Data Persistence
+  async function saveTasks() {
+    await Preferences.set({
+      key: 'taskflow_tasks',
+      value: JSON.stringify(tasks.value)
+    })
+    await Preferences.set({
+      key: 'taskflow_nextId',
+      value: nextId.value.toString()
+    })
+  }
+
+  async function loadTasks() {
+    try {
+      const { value: tasksStr } = await Preferences.get({ key: 'taskflow_tasks' })
+      if (tasksStr) {
+        tasks.value = JSON.parse(tasksStr)
+      }
+      
+      const { value: nextIdStr } = await Preferences.get({ key: 'taskflow_nextId' })
+      if (nextIdStr) {
+        nextId.value = parseInt(nextIdStr, 10)
+      }
+    } catch (e) {
+      console.error('Failed to load tasks', e)
+      tasks.value = []
+    }
+  }
+
   // TODO 4: Define addTask(name, priority, photo) action
   // - Guard against empty names
   // - Push a new task: { id: nextId.value++, name, priority, photo, done: false }
   function addTask(name, priority = 'low', photo = '') {
     if (!name.trim()) return
     tasks.value.push({ id: nextId.value++, name, priority, photo, done: false })
+    saveTasks()
   }
 
   // TODO 5: Define toggleTask(id) action
   function toggleTask(id) {
     const task = tasks.value.find(t => t.id === id)
-    if (task) task.done = !task.done
+    if (task) {
+      task.done = !task.done
+      saveTasks()
+    }
   }
 
   // TODO 6: Define removeTask(id) action
   function removeTask(id) {
     tasks.value = tasks.value.filter(t => t.id !== id)
+    saveTasks()
   }
 
   // DAY 8: Add photo path to a task
   function addPhotoToTask(id, path) {
     const task = tasks.value.find(t => t.id === id)
-    if (task) task.photo = path
+    if (task) {
+      task.photo = path
+      saveTasks()
+    }
   }
 
   function updateTaskDetails(id, name, priority) {
@@ -53,10 +91,11 @@ export const useTaskStore = defineStore('tasks', () => {
     if (task) {
       if (name.trim()) task.name = name.trim()
       task.priority = priority
+      saveTasks()
     }
   }
 
   // TODO 7: Return everything the component needs to access
-  return { tasks, nextId, totalCount, doneCount, pendingCount, currentFilter, addTask, toggleTask, removeTask, addPhotoToTask, updateTaskDetails }
+  return { tasks, nextId, totalCount, doneCount, pendingCount, currentFilter, addTask, toggleTask, removeTask, addPhotoToTask, updateTaskDetails, loadTasks, saveTasks }
 
 }, { persist: true })
