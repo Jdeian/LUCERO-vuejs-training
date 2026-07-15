@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.TaskFlow.app;
 
 import com.getcapacitor.BridgeActivity;
 
